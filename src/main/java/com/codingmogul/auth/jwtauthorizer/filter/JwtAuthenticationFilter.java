@@ -1,9 +1,9 @@
 package com.codingmogul.auth.jwtauthorizer.filter;
 
+import com.codingmogul.auth.jwtauthorizer.model.CustomAuthenticationToken;
 import com.codingmogul.auth.jwtauthorizer.model.DefaultAuthRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,7 +27,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             DefaultAuthRequest defaultAuthRequest = new ObjectMapper().readValue(request.getInputStream(), DefaultAuthRequest.class);
             return authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(defaultAuthRequest.getUserId(), defaultAuthRequest.getPassword(), new ArrayList<>()));
+                    .authenticate(new CustomAuthenticationToken(defaultAuthRequest.getUserId(), defaultAuthRequest.getPassword(), defaultAuthRequest.getExtra(), new ArrayList<>()));
 
         } catch (IOException e) {
             throw new RuntimeException(e);

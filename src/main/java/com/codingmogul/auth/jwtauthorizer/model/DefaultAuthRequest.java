@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class DefaultAuthRequest {
     private String userId;
     private String password;
+    private Object extra;
 }
